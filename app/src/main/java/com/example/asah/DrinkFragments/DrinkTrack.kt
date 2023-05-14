@@ -75,6 +75,7 @@ class DrinkTrack : Fragment() {
                 if(this.selectedGlass != null){
                     db.MinumanDAO().insert(Minuman(intensitas = this.selectedGlass!!))
                 }
+                this.selectedGlass = null
 
                 // Re-render element
                 updatePage(view, db)
