@@ -17,7 +17,7 @@ import com.example.asah.R
 import kotlin.properties.Delegates
 
 class DrinkTrack : Fragment() {
-    var selectedGlass by Delegates.notNull<Int>()
+    var selectedGlass: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +52,7 @@ class DrinkTrack : Fragment() {
 
             typeDropDown.setOnItemClickListener { parent, view, position, id ->
                 val positionToMl: Array<Int> = arrayOf(250, 450, 600)
-                 this.selectedGlass = positionToMl[position]
+                this.selectedGlass = positionToMl[position]
             }
 
             //launch
@@ -72,7 +72,9 @@ class DrinkTrack : Fragment() {
                 alertDialog.dismiss()
 
                 // process selected value
-                db.MinumanDAO().insert(Minuman(intensitas = this.selectedGlass))
+                if(this.selectedGlass != null){
+                    db.MinumanDAO().insert(Minuman(intensitas = this.selectedGlass!!))
+                }
 
                 // Re-render element
                 updatePage(view, db)
