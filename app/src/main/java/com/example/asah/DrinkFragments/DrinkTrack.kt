@@ -14,6 +14,7 @@ import com.example.asah.Database.Minuman
 import com.example.asah.Database.Profile
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
+import java.util.*
 import kotlin.properties.Delegates
 
 class DrinkTrack : Fragment() {
@@ -27,6 +28,10 @@ class DrinkTrack : Fragment() {
 
         // inisialisasi Database
         val db = Room.databaseBuilder(requireContext(), asahDatabase::class.java, "asah-db").allowMainThreadQueries().build()
+
+        // Update Date
+        val t_date = view.findViewById<TextView>(R.id.tanggal_today)
+        t_date.text = getDate()
 
         // Update Text & Progress
         updatePage(view, db)
@@ -73,7 +78,7 @@ class DrinkTrack : Fragment() {
 
                 // process selected value
                 if(this.selectedGlass != null){
-                    db.MinumanDAO().insert(Minuman(intensitas = this.selectedGlass!!))
+                    db.MinumanDAO().insert(Minuman(intensitas = this.selectedGlass!!, date = getDate()))
                 }
                 this.selectedGlass = null
 
@@ -101,7 +106,7 @@ class DrinkTrack : Fragment() {
         val t_intensitas = view.findViewById<TextView>(R.id.air_progresstext)
 
         var currentIntensitas = 0.0
-        val intensitas: List<Minuman> = db.MinumanDAO().getMinuman()
+        val intensitas: List<Minuman> = db.MinumanDAO().getMinumanbyDate(date = getDate())
         for(x in intensitas){
             currentIntensitas += x.intensitas.toDouble()
         }
@@ -118,5 +123,19 @@ class DrinkTrack : Fragment() {
             setProgressWithAnimation(((currentIntensitas*100)/target).toFloat(), 1000)
             startAngle = 180f
         }
+    }
+
+    fun getDate() : String {
+        val c = Calendar.getInstance()
+
+        val year = c.get(Calendar.YEAR).toString()
+        val month = c.get(Calendar.MONTH).toString()
+        val day = c.get(Calendar.DAY_OF_WEEK)
+
+        val hari = arrayOf("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu")
+
+        val date = "${hari[day-1]} - $month - $year"
+
+        return date
     }
 }
