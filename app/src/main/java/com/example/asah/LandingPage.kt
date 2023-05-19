@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.room.Room
 import com.example.asah.Database.Profile
 import com.example.asah.Database.asahDatabase
 import com.example.asah.databinding.ActivityLandingPageBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LandingPage : AppCompatActivity() {
     lateinit var binding: ActivityLandingPageBinding
@@ -38,6 +42,36 @@ class LandingPage : AppCompatActivity() {
         val items = listOf("Male", "Female")
         val adapter = ArrayAdapter(this, R.layout.list_dropdown, items)
         (binding.inputGender as? AutoCompleteTextView)?.setAdapter(adapter)
+
+        // Date input
+        // TODO : Halooo, nanti ngedit tanggal di sini yaa
+        val inputDatePicker: com.google.android.material.textfield.TextInputEditText =
+            findViewById(R.id.input_date)
+
+        // when text field button is clicked
+        inputDatePicker.setOnClickListener {
+            // Initiation date picker with
+            // MaterialDatePicker.Builder.datePicker()
+            // and building it using build()
+            val datePicker = MaterialDatePicker.Builder.datePicker().build()
+            datePicker.show(supportFragmentManager, "DatePicker")
+
+            // Setting up the event for when ok is clicked
+            datePicker.addOnPositiveButtonClickListener {
+                // formatting date in dd-mm-yyyy format.
+                val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+                val date = dateFormatter.format(Date(it))
+                val tvDate: com.google.android.material.textfield.TextInputEditText = findViewById(R.id.input_date)
+                tvDate.setText(date)
+                Toast.makeText(this, "$date is selected", Toast.LENGTH_LONG).show()
+            }
+
+            // Setting up the event for when cancelled is clicked
+            datePicker.addOnNegativeButtonClickListener { }
+
+            // Setting up the event for when back button is pressed
+            datePicker.addOnCancelListener { }
+        }
 
 
         // Sign-Up Button
