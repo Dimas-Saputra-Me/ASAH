@@ -3,6 +3,7 @@ package com.example.asah
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -63,7 +64,6 @@ class LandingPage : AppCompatActivity() {
                 val date = dateFormatter.format(Date(it))
                 val tvDate: com.google.android.material.textfield.TextInputEditText = findViewById(R.id.input_date)
                 tvDate.setText(date)
-                Toast.makeText(this, "$date is selected", Toast.LENGTH_LONG).show()
             }
 
             // Setting up the event for when cancelled is clicked
@@ -80,18 +80,22 @@ class LandingPage : AppCompatActivity() {
             if(db.ProfileDAO().getProfile().isEmpty()){
                 db.ProfileDAO().insert(Profile(
                     nama = binding.inputNama.text.toString(),
-                    gender = binding.inputGender.text.toString() == "Male"
+                    gender = binding.inputGender.text.toString() == "Male",
+                    tanggal_lahir = inputDatePicker.text.toString()
                 ))
             } else {
                 db.ProfileDAO().update(Profile(
                     id = 1,
                     nama = binding.inputNama.text.toString(),
-                    gender = binding.inputGender.text.toString() == "Male"
+                    gender = binding.inputGender.text.toString() == "Male",
+                    tanggal_lahir = inputDatePicker.text.toString()
                 ))
             }
 
             val intent = Intent(this, Survey::class.java)
             startActivity(intent)
+
         }
     }
+
 }

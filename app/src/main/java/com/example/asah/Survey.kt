@@ -29,18 +29,14 @@ class Survey : AppCompatActivity() {
                 db.Survey_dbDAO().insert(
                     Survey_db(
                     tinggi = binding.inputTinggi.text.toString().toDouble(),
-                    berat = binding.inputBerat.text.toString().toDouble(),
-                    olg_minggu = binding.inputOlahragaSeminggu.text.toString().toInt(),
-                    olg_jam = binding.inputOlahragaJam.text.toString().toDouble()
+                    berat = binding.inputBerat.text.toString().toDouble()
                 )
                 )
             } else {
                 db.Survey_dbDAO().update(Survey_db(
                     id = 1,
                     tinggi = binding.inputTinggi.text.toString().toDouble(),
-                    berat = binding.inputBerat.text.toString().toDouble(),
-                    olg_minggu = binding.inputOlahragaSeminggu.text.toString().toInt(),
-                    olg_jam = binding.inputOlahragaJam.text.toString().toDouble()
+                    berat = binding.inputBerat.text.toString().toDouble()
                 ))
             }
 

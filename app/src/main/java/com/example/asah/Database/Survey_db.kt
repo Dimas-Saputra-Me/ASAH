@@ -8,7 +8,5 @@ import androidx.room.PrimaryKey
 data class Survey_db(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
     @ColumnInfo(name = "tinggi") val tinggi: Double,
-    @ColumnInfo(name = "berat") val berat: Double,
-    @ColumnInfo(name = "olg_minggu") val olg_minggu: Int,
-    @ColumnInfo(name = "olg_jam") val olg_jam: Double
+    @ColumnInfo(name = "berat") val berat: Double
 )

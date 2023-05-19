@@ -30,16 +30,15 @@ class DatabaseTemp : AppCompatActivity() {
         var dbText = " "
 
         if(profile.isNotEmpty()){
-            dbText += "${profile[0].nama} | ${profile[0].gender}\n"
+            dbText += "${profile[0].nama} | ${profile[0].gender} | ${profile[0].tanggal_lahir}\n"
         }
         if(surveys.isNotEmpty()){
-            dbText += "${surveys[0].tinggi} | ${surveys[0].berat} | ${surveys[0].olg_jam} | ${surveys[0].olg_minggu} |\n"
+            dbText += "${surveys[0].tinggi} | ${surveys[0].berat} |\n"
         }
 
         for(m in makanan){
             dbText += "${m.karbohidrat} | ${m.protein} | ${m.serat} | ${m.date} |\n"
         }
-
 
 
         binding.dataTmp.text = dbText
