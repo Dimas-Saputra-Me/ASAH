@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.room.Room
+import com.example.asah.Database.Makanan
 import com.example.asah.Database.Profile
 import com.example.asah.Database.Survey_db
 import com.example.asah.Database.asahDatabase
@@ -24,6 +25,7 @@ class DatabaseTemp : AppCompatActivity() {
         // Get Data
         val profile: List<Profile> = db.ProfileDAO().getProfile()
         val surveys: List<Survey_db> = db.Survey_dbDAO().getSurvey()
+        val makanan: List<Makanan> = db.MakananDAO().getMakanan()
 
         var dbText = " "
 
@@ -33,6 +35,11 @@ class DatabaseTemp : AppCompatActivity() {
         if(surveys.isNotEmpty()){
             dbText += "${surveys[0].tinggi} | ${surveys[0].berat} | ${surveys[0].olg_jam} | ${surveys[0].olg_minggu} |\n"
         }
+
+        for(m in makanan){
+            dbText += "${m.karbohidrat} | ${m.protein} | ${m.serat} | ${m.date} |\n"
+        }
+
 
 
         binding.dataTmp.text = dbText

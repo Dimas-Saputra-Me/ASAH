@@ -26,7 +26,8 @@ class MenuRutinitas : AppCompatActivity() {
 
         // Page Buttons
         binding.btnMenuMakan.setOnClickListener {
-
+            val moveIntent = Intent(this, Eat::class.java)
+            startActivity(moveIntent)
         }
         binding.btnMenuMinum.setOnClickListener {
             val moveIntent = Intent(this, Drink::class.java)
