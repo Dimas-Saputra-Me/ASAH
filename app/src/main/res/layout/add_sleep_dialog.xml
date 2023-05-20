@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95"/>
+
+    <TextView
+        android:id="@+id/layout_tidur"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+        android:background="@drawable/rect_container_textfield"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Tidur"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/layout_tidur"
+        app:layout_constraintStart_toStartOf="@+id/layout_tidur"
+        app:layout_constraintTop_toTopOf="@+id/layout_tidur" />
+
+    <ImageView
+        android:id="@+id/closed_eye_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_tidur"
+        app:layout_constraintEnd_toEndOf="@+id/layout_tidur"
+        app:layout_constraintStart_toStartOf="@+id/layout_tidur"
+        app:srcCompat="@drawable/closed_eye" />
+
+    <TextView
+        android:id="@+id/layout_bangun"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+        android:background="@drawable/rect_container_textfield"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Bangun"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/layout_bangun"
+        app:layout_constraintStart_toStartOf="@+id/layout_bangun"
+        app:layout_constraintTop_toTopOf="@+id/layout_bangun" />
+
+    <ImageView
+        android:id="@+id/opened_eye_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_bangun"
+        app:layout_constraintEnd_toEndOf="@+id/layout_bangun"
+        app:layout_constraintStart_toStartOf="@+id/layout_bangun"
+        app:srcCompat="@drawable/opened_eye" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ADD"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/layout_tidur" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
