@@ -38,7 +38,8 @@ class MenuRutinitas : AppCompatActivity() {
             startActivity(moveIntent)
         }
         binding.btnMenuScreen.setOnClickListener {
-
+            val moveIntent = Intent(this, Screen::class.java)
+            startActivity(moveIntent)
         }
 
         // Navigation Menu

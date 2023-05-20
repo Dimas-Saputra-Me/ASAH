@@ -19,7 +19,7 @@ class ScreenTime : Fragment() {
         val view = inflater.inflate(R.layout.fragment_screen_time, container, false)
 
         // btn add sleep
-        val btn_add = view.findViewById<ImageView>(R.id.btn_add_pemakaian)
+        val btn_add = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_add_pemakaian)
         btn_add.setOnClickListener {
             // inflate dialog
             val dialogView = LayoutInflater.from(activity).inflate(R.layout.add_screen_dialog, null)
