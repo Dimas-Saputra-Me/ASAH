@@ -11,6 +11,7 @@ import androidx.room.Room
 import com.example.asah.Database.Minuman
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
+import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -34,7 +35,7 @@ class DrinkGraph : Fragment() {
         calendar.add(Calendar.DATE, -7);
             // Get Day Data
         val days: MutableList<Double> = ArrayList();
-        days.add(calendar.get(Calendar.DAY_OF_MONTH).toDouble()+1)
+        days.add(calendar.get(Calendar.DAY_OF_WEEK).toDouble())
         for(i in 1..7){
             days.add(days[i-1]+1)
         }
@@ -81,9 +82,22 @@ class DrinkGraph : Fragment() {
         series.color = R.color.green
         barGraphView.addSeries(series)
 
-        // 7 days layout spacing
+        // days layout spacing
         barGraphView.getGridLabelRenderer().setNumHorizontalLabels(7);
         barGraphView.viewport.isScalable = true
+
+        // custom string label for days
+        barGraphView.getGridLabelRenderer().setLabelFormatter(object : DefaultLabelFormatter() {
+            override fun formatLabel(value: Double, isValueX: Boolean): String {
+                return if (isValueX) {
+                    val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
+                    return hari[value.toInt()-1]
+                } else {
+                    // show currency for y values
+                    super.formatLabel(value, isValueX) + " ml"
+                }
+            }
+        })
 
         // Update rata-rata
         var avg = 0.0
