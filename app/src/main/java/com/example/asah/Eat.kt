@@ -14,6 +14,10 @@ import java.util.*
 class Eat : AppCompatActivity() {
     lateinit var binding: ActivityEatBinding
 
+    private var selectedKarbohidrat: Double? = null
+    private var selectedProtein: Double? = null
+    private var selectedSerat: Double? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEatBinding.inflate(layoutInflater)
@@ -64,19 +68,42 @@ class Eat : AppCompatActivity() {
         val seratAdapter = ArrayAdapter(this, R.layout.list_dropdown, seratItem)
         (binding.inputSerat as? AutoCompleteTextView)?.setAdapter(seratAdapter)
 
+        // Get Karbohidrat
+        val karbohidratDropdown: AutoCompleteTextView = binding.inputKarbohidrat
+        karbohidratDropdown.setOnItemClickListener { parent, view, position, id ->
+            // TODO: change cal value
+            val positionToKarbohidrat: Array<Double> = arrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
+            this.selectedKarbohidrat = positionToKarbohidrat[position]
+        }
+
+        // Get Protein
+        val ProteinDropdown: AutoCompleteTextView = binding.inputProtein
+        ProteinDropdown.setOnItemClickListener { parent, view, position, id ->
+            // TODO: change cal value
+            val positionToProtein: Array<Double> = arrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0)
+            this.selectedProtein = positionToProtein[position]
+        }
+
+        // Get Serat
+        val SeratDropdown: AutoCompleteTextView = binding.inputSerat
+        SeratDropdown.setOnItemClickListener { parent, view, position, id ->
+            // TODO: change cal value
+            val positionToSerat: Array<Double> = arrayOf(1.0, 2.0, 3.0)
+            this.selectedSerat = positionToSerat[position]
+        }
+
         binding.btnAddMakan.setOnClickListener {
             db.MakananDAO().insert(Makanan(
                 // TODO : diganti yaa
                 // TODO : nanti pake if else kalau bisa
-                karbohidrat = binding.inputKarbohidrat.text.toString().toDouble(),
-                protein = binding.inputProtein.text.toString().toDouble(),
-                serat = binding.inputSerat.text.toString().toDouble(),
+                karbohidrat = this.selectedKarbohidrat!!,
+                protein = this.selectedProtein!!,
+                serat = this.selectedSerat!!,
                 date = getDate()
             ))
 
             Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show()
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

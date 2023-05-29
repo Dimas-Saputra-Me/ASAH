@@ -38,23 +38,41 @@ class PagiSiang : Fragment() {
         // inisialisasi Database
         val db = Room.databaseBuilder(requireContext(), asahDatabase::class.java, "asah-db").allowMainThreadQueries().build()
 
-        // get data
-        // TODO : silahkan get data disini hwhw
+        // Get data
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, -7);
+        // Get Day Data
+        val days: MutableList<Double> = ArrayList();
+        days.add(calendar.get(Calendar.DAY_OF_WEEK).toDouble())
+        for(i in 1..7){
+            days.add(days[i-1]+1)
+        }
+        // Get Intensitas Data
+        val intensitas: MutableList<Double> = ArrayList()
+        for(i in 1..7){
+            calendar.add(Calendar.DATE, 1);
+            val olahragaDB: List<Olahraga> = db.OlahragaDAO().getOlahragabyDateandWaktu(date = getDate(calendar), waktu = false)
+            intensitas.add(0.0)
 
-        // edit graph
-        // TODO : nanti edit graph nya disini ahay
+            for(x in olahragaDB){
+                intensitas[i-1] += (x.kalori * x.durasi)
+            }
+
+        }
+
+        // Graph
         barGraphView = view.findViewById(R.id.graph)
         val series: BarGraphSeries<DataPoint> = BarGraphSeries(
             arrayOf(
                 // on below line we are adding
                 // each point on our x and y axis.
-//                DataPoint(days[0], intensitas[0]),
-//                DataPoint(days[1], intensitas[1]),
-//                DataPoint(days[2], intensitas[2]),
-//                DataPoint(days[3], intensitas[3]),
-//                DataPoint(days[4], intensitas[4]),
-//                DataPoint(days[5], intensitas[5]),
-//                DataPoint(days[6], intensitas[6]),
+                DataPoint(days[0], intensitas[0]),
+                DataPoint(days[1], intensitas[1]),
+                DataPoint(days[2], intensitas[2]),
+                DataPoint(days[3], intensitas[3]),
+                DataPoint(days[4], intensitas[4]),
+                DataPoint(days[5], intensitas[5]),
+                DataPoint(days[6], intensitas[6]),
 
                 )
         )
@@ -82,10 +100,10 @@ class PagiSiang : Fragment() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
                 return if (isValueX) {
                     val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
-                    return hari[value.toInt()-2 ]
+                    return hari[value.toInt()-2]
                 } else {
                     // show currency for y values
-                    super.formatLabel(value, isValueX) + " ml"
+                    super.formatLabel(value, isValueX) + " kcal"
                 }
             }
         })
@@ -149,13 +167,14 @@ class PagiSiang : Fragment() {
             }
         }
 
+        // TODO: Streak harian
+        // TODO: Rata-Rata Kalori
+
         // Inflate the layout for this fragment
         return view
     }
 
-    fun getDate() : String {
-        val c = Calendar.getInstance()
-
+    fun getDate(c: Calendar = Calendar.getInstance()) : String {
         val year = c.get(Calendar.YEAR).toString()
         val month = c.get(Calendar.MONTH).toString()
         val day_week = c.get(Calendar.DAY_OF_WEEK)

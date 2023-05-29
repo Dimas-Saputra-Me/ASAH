@@ -1,11 +1,14 @@
 package com.example.asah
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager
 import com.example.asah.Adapter.DrinkTabAdapter
 import com.google.android.material.tabs.TabLayout
+
 
 class Drink : AppCompatActivity() {
 
