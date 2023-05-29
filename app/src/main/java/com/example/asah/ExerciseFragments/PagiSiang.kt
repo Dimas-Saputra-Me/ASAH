@@ -1,5 +1,6 @@
 package com.example.asah.ExerciseFragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,11 +18,16 @@ import com.example.asah.Database.Olahraga
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
 import com.google.android.material.textfield.TextInputLayout
+import com.jjoe64.graphview.DefaultLabelFormatter
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.BarGraphSeries
+import com.jjoe64.graphview.series.DataPoint
 import java.util.*
 
 class PagiSiang : Fragment() {
 
     private var selectedExercise: Double? = null
+    lateinit var barGraphView: GraphView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +37,58 @@ class PagiSiang : Fragment() {
 
         // inisialisasi Database
         val db = Room.databaseBuilder(requireContext(), asahDatabase::class.java, "asah-db").allowMainThreadQueries().build()
+
+        // get data
+        // TODO : silahkan get data disini hwhw
+
+        // edit graph
+        // TODO : nanti edit graph nya disini ahay
+        barGraphView = view.findViewById(R.id.graph)
+        val series: BarGraphSeries<DataPoint> = BarGraphSeries(
+            arrayOf(
+                // on below line we are adding
+                // each point on our x and y axis.
+//                DataPoint(days[0], intensitas[0]),
+//                DataPoint(days[1], intensitas[1]),
+//                DataPoint(days[2], intensitas[2]),
+//                DataPoint(days[3], intensitas[3]),
+//                DataPoint(days[4], intensitas[4]),
+//                DataPoint(days[5], intensitas[5]),
+//                DataPoint(days[6], intensitas[6]),
+
+                )
+        )
+
+        // Styling
+        series.setValueDependentColor { data ->
+            Color.GREEN
+        }
+
+        series.spacing = 10
+
+        // draw values on top
+        series.isDrawValuesOnTop = true
+        series.valuesOnTopColor = Color.GREEN
+
+        series.color = R.color.green
+        barGraphView.addSeries(series)
+
+        // days layout spacing
+        barGraphView.getGridLabelRenderer().setNumHorizontalLabels(7);
+        barGraphView.viewport.isScalable = true
+
+        // custom string label for days
+        barGraphView.getGridLabelRenderer().setLabelFormatter(object : DefaultLabelFormatter() {
+            override fun formatLabel(value: Double, isValueX: Boolean): String {
+                return if (isValueX) {
+                    val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
+                    return hari[value.toInt()-2 ]
+                } else {
+                    // show currency for y values
+                    super.formatLabel(value, isValueX) + " ml"
+                }
+            }
+        })
 
         // btn add exercise
         val btn_add = view.findViewById<ImageView>(R.id.btn_add_olahraga)

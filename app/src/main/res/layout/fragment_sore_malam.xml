@@ -10,14 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="320dp"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginTop="24dp"
-            android:text="Graphic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -26,18 +40,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="Streak Harian : (n) hari"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/graph" />
 
         <TextView
             android:id="@+id/kalori_terbakar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rata-Rata Kalori Terbakar : (m) kcal/hari"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/streak_harian"
+            app:layout_constraintStart_toStartOf="@+id/streak_harian"
             app:layout_constraintTop_toBottomOf="@+id/streak_harian" />
 
         <ImageView
@@ -46,9 +59,9 @@
             android:layout_height="48dp"
             android:layout_marginTop="72dp"
             android:src="@drawable/btn_add_olahraga"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/kalori_terbakar"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/kalori_terbakar"
             app:layout_constraintTop_toBottomOf="@+id/kalori_terbakar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
