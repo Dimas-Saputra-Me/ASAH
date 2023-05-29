@@ -2,6 +2,7 @@ package com.example.asah
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import com.example.asah.Adapter.DrinkTabAdapter
 import com.google.android.material.tabs.TabLayout
@@ -36,6 +37,7 @@ class Drink : AppCompatActivity() {
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewPager.currentItem = tab!!.position
+                // TODO: make fragment update on tab change
             }
             override fun onTabReselected(tab: TabLayout.Tab?) { }
             override fun onTabUnselected(tab: TabLayout.Tab?) { }

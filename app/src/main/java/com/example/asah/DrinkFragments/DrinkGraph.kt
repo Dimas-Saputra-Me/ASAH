@@ -2,6 +2,7 @@ package com.example.asah.DrinkFragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,7 +92,7 @@ class DrinkGraph : Fragment() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
                 return if (isValueX) {
                     val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
-                    return hari[value.toInt()-1]
+                    return hari[value.toInt()-2 ]
                 } else {
                     // show currency for y values
                     super.formatLabel(value, isValueX) + " ml"

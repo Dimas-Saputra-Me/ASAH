@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.room.Room
-import com.example.asah.Database.Makanan
-import com.example.asah.Database.Profile
-import com.example.asah.Database.Survey_db
-import com.example.asah.Database.asahDatabase
+import com.example.asah.Database.*
 import com.example.asah.databinding.ActivityDatabaseTempBinding
 
 class DatabaseTemp : AppCompatActivity() {
@@ -26,6 +23,7 @@ class DatabaseTemp : AppCompatActivity() {
         val profile: List<Profile> = db.ProfileDAO().getProfile()
         val surveys: List<Survey_db> = db.Survey_dbDAO().getSurvey()
         val makanan: List<Makanan> = db.MakananDAO().getMakanan()
+        val olahraga: List<Olahraga> = db.OlahragaDAO().getOlahraga()
 
         var dbText = " "
 
@@ -40,6 +38,9 @@ class DatabaseTemp : AppCompatActivity() {
             dbText += "${m.karbohidrat} | ${m.protein} | ${m.serat} | ${m.date} |\n"
         }
 
+        for(o in olahraga){
+            dbText += "${o.id} | ${o.waktu} | ${o.kalori} | ${o.durasi} | ${o.date} |\n"
+        }
 
         binding.dataTmp.text = dbText
 
