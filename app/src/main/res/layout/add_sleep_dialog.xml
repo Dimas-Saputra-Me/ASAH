@@ -6,14 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
+        android:id="@+id/guideline1a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.05"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline1b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -21,13 +35,15 @@
 
     <TextView
         android:id="@+id/layout_tidur"
-        android:layout_width="160dp"
+        android:layout_width="0dp"
         android:layout_height="120dp"
         android:background="@drawable/rect_container_textfield"
-        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline1b"
+        app:layout_constraintStart_toStartOf="@+id/guideline1a"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -37,6 +53,19 @@
         app:layout_constraintEnd_toEndOf="@+id/layout_tidur"
         app:layout_constraintStart_toStartOf="@+id/layout_tidur"
         app:layout_constraintTop_toTopOf="@+id/layout_tidur" />
+
+    <AutoCompleteTextView
+        android:id="@+id/textPickSleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:hint="Pick Time"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/closed_eye_ic"
+        app:layout_constraintEnd_toEndOf="@+id/layout_tidur"
+        app:layout_constraintStart_toStartOf="@+id/layout_tidur"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/closed_eye_ic"
@@ -50,13 +79,15 @@
 
     <TextView
         android:id="@+id/layout_bangun"
-        android:layout_width="160dp"
+        android:layout_width="0dp"
         android:layout_height="120dp"
         android:background="@drawable/rect_container_textfield"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2b"
+        app:layout_constraintStart_toStartOf="@+id/guideline2a"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -66,6 +97,19 @@
         app:layout_constraintEnd_toEndOf="@+id/layout_bangun"
         app:layout_constraintStart_toStartOf="@+id/layout_bangun"
         app:layout_constraintTop_toTopOf="@+id/layout_bangun" />
+
+    <AutoCompleteTextView
+        android:id="@+id/textPickWake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:hint="Pick Time"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/opened_eye_ic"
+        app:layout_constraintEnd_toEndOf="@+id/layout_bangun"
+        app:layout_constraintStart_toStartOf="@+id/layout_bangun"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/opened_eye_ic"
@@ -83,9 +127,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="ADD"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2b"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintStart_toStartOf="@+id/guideline1a"
         app:layout_constraintTop_toBottomOf="@+id/layout_tidur" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

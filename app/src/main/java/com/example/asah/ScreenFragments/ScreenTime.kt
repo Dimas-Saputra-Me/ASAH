@@ -1,5 +1,6 @@
 package com.example.asah.ScreenFragments
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +10,13 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import com.example.asah.R
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.BarGraphSeries
+import com.jjoe64.graphview.series.DataPoint
 
 class ScreenTime : Fragment() {
 
+    lateinit var barGraphView: GraphView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +54,30 @@ class ScreenTime : Fragment() {
             }
         }
 
+        // bargraphview
+        barGraphView = view.findViewById(R.id.graph)
+        val series: BarGraphSeries<DataPoint> = BarGraphSeries(
+            arrayOf(
+                // on below line we are adding
+                // each point on our x and y axis.
+
+
+            )
+        )
+
+        // Styling
+        series.setValueDependentColor { data ->
+            Color.GREEN
+        }
+
+        series.spacing = 10
+
+        // draw values on top
+        series.isDrawValuesOnTop = true
+        series.valuesOnTopColor = Color.GREEN
+
+        series.color = R.color.green
+        barGraphView.addSeries(series)
 
         // Inflate the layout for this fragment
         return view

@@ -99,7 +99,7 @@ class SoreMalam : Fragment() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
                 return if (isValueX) {
                     val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
-                    return hari[value.toInt()-2]
+                    return hari[value.toInt() % 7]
                 } else {
                     // show currency for y values
                     super.formatLabel(value, isValueX) + " kcal"

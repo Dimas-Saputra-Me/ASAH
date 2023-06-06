@@ -38,7 +38,7 @@ class DrinkGraph : Fragment() {
         val days: MutableList<Double> = ArrayList();
         days.add(calendar.get(Calendar.DAY_OF_WEEK).toDouble())
         for(i in 1..7){
-            days.add(days[i-1]+1)
+            days.add((days[i-1]+1))
         }
             // Get Intensitas Data
         val intensitas: MutableList<Double> = ArrayList()
@@ -92,7 +92,7 @@ class DrinkGraph : Fragment() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
                 return if (isValueX) {
                     val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
-                    return hari[value.toInt()-2 ]
+                    return hari[value.toInt() % 7]
                 } else {
                     // show currency for y values
                     super.formatLabel(value, isValueX) + " ml"
