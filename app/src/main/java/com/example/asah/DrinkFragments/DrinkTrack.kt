@@ -33,7 +33,7 @@ class DrinkTrack : Fragment() {
         val t_date = view.findViewById<TextView>(R.id.tanggal_today)
         t_date.text = getDate()
 
-        // Update Text & Progress
+        // Inisialisasi Text & Progress
         updatePage(view, db)
 
         // btn add drink

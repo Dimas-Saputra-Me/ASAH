@@ -7,21 +7,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.room.Room
+import com.example.asah.Database.Screen
+import com.example.asah.Database.asahDatabase
 import com.example.asah.R
+import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
+import java.util.*
 
 class ScreenTime : Fragment() {
 
     lateinit var barGraphView: GraphView
+    var selectedTime: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_screen_time, container, false)
+
+        // Inisialisasi Database
+        val db = Room.databaseBuilder(requireContext(), asahDatabase::class.java, "asah-db").allowMainThreadQueries().build()
+
+        // Update Date
+        val t_date = view.findViewById<TextView>(R.id.tanggal_today)
+        t_date.text = getDate(Calendar.getInstance())
+
+        // Inisialisasi Cirular Progress
+        updateCircularProgress(view, db)
 
         // btn add sleep
         val btn_add = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_add_pemakaian)
@@ -41,7 +57,7 @@ class ScreenTime : Fragment() {
             val slider = dialogView.findViewById<com.google.android.material.slider.Slider>(R.id.add_batas)
             slider.addOnChangeListener { slider, value, fromUser ->
                 // Responds to when slider's value is changed
-                // TODO : wkwkwkwkw, maap nambah kerjaan
+                this.selectedTime = value.toInt()
             }
 
             // on click add screen time
@@ -50,19 +66,56 @@ class ScreenTime : Fragment() {
                 alertDialog.dismiss()
 
                 // process selected value
-                // TODO : Haloo, todo disini
+                if(this.selectedTime != null){
+                    db.ScreenDAO().insert(Screen(jam = this.selectedTime!!, date = getDate(Calendar.getInstance())))
+                }
+                this.selectedTime = null
+
+                // Re-render Progress Circular
+                updateCircularProgress(view, db)
+
+                // TODO : Re-render graph
             }
         }
 
-        // bargraphview
+        // GRAPH
+        // Get data
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, -7);
+        // Get Day Data
+        val days: MutableList<Double> = ArrayList();
+        days.add(calendar.get(Calendar.DAY_OF_WEEK).toDouble())
+        for(i in 1..7){
+            days.add((days[i-1]+1))
+        }
+        // Get Screen Data
+        val screen: MutableList<Double> = ArrayList()
+        for(i in 1..7){
+            calendar.add(Calendar.DATE, 1);
+            val screenDB: List<Screen> = db.ScreenDAO().getScreenbyDate(date = getDate(calendar))
+            screen.add(0.0)
+
+            for(x in screenDB){
+                screen[i-1] += x.jam.toDouble()
+            }
+
+        }
+
+
         barGraphView = view.findViewById(R.id.graph)
         val series: BarGraphSeries<DataPoint> = BarGraphSeries(
             arrayOf(
                 // on below line we are adding
                 // each point on our x and y axis.
+                DataPoint(days[0], screen[0]),
+                DataPoint(days[1], screen[1]),
+                DataPoint(days[2], screen[2]),
+                DataPoint(days[3], screen[3]),
+                DataPoint(days[4], screen[4]),
+                DataPoint(days[5], screen[5]),
+                DataPoint(days[6], screen[6]),
 
-
-            )
+                )
         )
 
         // Styling
@@ -79,7 +132,66 @@ class ScreenTime : Fragment() {
         series.color = R.color.green
         barGraphView.addSeries(series)
 
+        // days layout spacing
+        barGraphView.getGridLabelRenderer().setNumHorizontalLabels(7);
+        barGraphView.viewport.isScalable = true
+
+        // custom string label for days
+        barGraphView.getGridLabelRenderer().setLabelFormatter(object : DefaultLabelFormatter() {
+            override fun formatLabel(value: Double, isValueX: Boolean): String {
+                return if (isValueX) {
+                    val hari = arrayOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
+                    return hari[value.toInt() % 7]
+                } else {
+                    // show currency for y values
+                    super.formatLabel(value, isValueX) + " jam"
+                }
+            }
+        })
+
         // Inflate the layout for this fragment
         return view
+    }
+
+    fun updateCircularProgress(view: View, db: asahDatabase){
+        // Inisialisasi Circular Progress
+        val progress_screen = view.findViewById<com.mikhaellopez.circularprogressbar.CircularProgressBar>(R.id.screen_progressbar)
+
+        val t_screen = view.findViewById<TextView>(R.id.screen_progresstext)
+
+        var currentJam = 0.0
+        val screen: List<Screen> = db.ScreenDAO().getScreenbyDate(date = getDate(Calendar.getInstance()))
+        for(x in screen){
+            currentJam += x.jam.toDouble()
+        }
+
+        //TODO: UPDATE TARGET SESUAI PERHITUNGAN
+        var target = 24.0
+
+        // Pisah Hari dan Jam
+        var hari = currentJam.toInt() / 24
+        var jam = if((currentJam.toInt() % 24) == 0) "00" else (currentJam.toInt() % 24)
+        var menit = "00"
+        t_screen.text = "$hari:$jam:$menit"
+
+        // Update Progress
+        progress_screen.apply {
+            progressMax = 100f
+            setProgressWithAnimation(((currentJam*100)/target).toFloat(), 1000)
+            startAngle = 180f
+        }
+    }
+
+    fun getDate(c: Calendar) : String {
+        val year = c.get(Calendar.YEAR).toString()
+        val month = c.get(Calendar.MONTH).toString()
+        val day_week = c.get(Calendar.DAY_OF_WEEK)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val hari = arrayOf("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu")
+
+        val date = "${hari[day_week-1]} - $day/${month.toInt() + 1}/$year"
+
+        return date
     }
 }

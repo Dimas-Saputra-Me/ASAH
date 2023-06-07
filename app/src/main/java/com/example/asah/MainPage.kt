@@ -1,20 +1,26 @@
 package com.example.asah
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.room.Room
+import com.example.asah.Database.Profile
+import com.example.asah.Database.asahDatabase
 import com.example.asah.databinding.ActivityMainPageBinding
-import com.google.android.material.navigation.NavigationView
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.BarGraphSeries
-import com.jjoe64.graphview.series.DataPoint
 import kotlin.system.exitProcess
 
 class MainPage : AppCompatActivity() {
@@ -22,11 +28,42 @@ class MainPage : AppCompatActivity() {
     lateinit var binding: ActivityMainPageBinding
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    lateinit var notificationManager: NotificationManager
+    lateinit var notificationBuilder: NotificationCompat.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // inisialisasi Database
+        val db = Room.databaseBuilder(applicationContext, asahDatabase::class.java, "asah-db").allowMainThreadQueries().build()
+        val profile: List<Profile> = db.ProfileDAO().getProfile()
+
+        // NOTIFICATION
+        val channelId = "asah"
+        val channelName = "Asah Notification"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, channelName, importance)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // NOTIFICATION - Create an intent for the click action
+        val intent = Intent(this, MainPage::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        // NOTIFICATION - Build the notification
+        notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.icon_asah)
+            .setContentTitle("Judul")
+            .setContentText("Isi")
+            .setColor(Color.BLUE)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
         // Navigation Menu
         drawerLayout = binding.myDrawerLayout
@@ -54,6 +91,11 @@ class MainPage : AppCompatActivity() {
             true
         }
 
+        // Set Profile Name
+        binding.nama.text = SpannableStringBuilder()
+            .append("Halo ")
+            .append(profile[0].nama, ForegroundColorSpan(Color.GREEN), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            .append("!", ForegroundColorSpan(Color.BLACK), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         // Bottom Bar Listener
         binding.bottomNavigation.menu.findItem(R.id.nav_bottom_home).isChecked = true
@@ -91,10 +133,14 @@ class MainPage : AppCompatActivity() {
         }
 
         when (item.itemId) {
-//            R.id.ID -> {
-//
-//            }
+            R.id.notification -> {
+                // Display the notification
+                val notificationId = 1
+                notificationManager.notify(notificationId, notificationBuilder.build())
+            }
+
         }
+
         return super.onOptionsItemSelected(item)
     }
 

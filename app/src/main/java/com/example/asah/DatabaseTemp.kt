@@ -2,7 +2,7 @@ package com.example.asah
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.example.asah.Database.Screen
 import androidx.room.Room
 import com.example.asah.Database.*
 import com.example.asah.databinding.ActivityDatabaseTempBinding
@@ -24,6 +24,7 @@ class DatabaseTemp : AppCompatActivity() {
         val surveys: List<Survey_db> = db.Survey_dbDAO().getSurvey()
         val makanan: List<Makanan> = db.MakananDAO().getMakanan()
         val olahraga: List<Olahraga> = db.OlahragaDAO().getOlahraga()
+        val screen: List<Screen> = db.ScreenDAO().getScreen()
 
         var dbText = " "
 
@@ -40,6 +41,10 @@ class DatabaseTemp : AppCompatActivity() {
 
         for(o in olahraga){
             dbText += "${o.id} | ${o.waktu} | ${o.kalori} | ${o.durasi} | ${o.date} |\n"
+        }
+
+        for(s in screen){
+            dbText += "${s.id} | ${s.jam} | ${s.date} |\n"
         }
 
         binding.dataTmp.text = dbText
