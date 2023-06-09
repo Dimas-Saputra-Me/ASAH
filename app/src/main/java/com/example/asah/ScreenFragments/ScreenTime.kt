@@ -13,6 +13,7 @@ import androidx.room.Room
 import com.example.asah.Database.Screen
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
+import com.example.asah.getDate
 import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
@@ -34,7 +35,7 @@ class ScreenTime : Fragment() {
 
         // Update Date
         val t_date = view.findViewById<TextView>(R.id.tanggal_today)
-        t_date.text = getDate(Calendar.getInstance())
+        t_date.text = getDate()
 
         // Inisialisasi Cirular Progress
         updateCircularProgress(view, db)
@@ -67,7 +68,7 @@ class ScreenTime : Fragment() {
 
                 // process selected value
                 if(this.selectedTime != null){
-                    db.ScreenDAO().insert(Screen(jam = this.selectedTime!!, date = getDate(Calendar.getInstance())))
+                    db.ScreenDAO().insert(Screen(jam = this.selectedTime!!, date = getDate()))
                 }
                 this.selectedTime = null
 
@@ -160,7 +161,7 @@ class ScreenTime : Fragment() {
         val t_screen = view.findViewById<TextView>(R.id.screen_progresstext)
 
         var currentJam = 0.0
-        val screen: List<Screen> = db.ScreenDAO().getScreenbyDate(date = getDate(Calendar.getInstance()))
+        val screen: List<Screen> = db.ScreenDAO().getScreenbyDate(date = getDate())
         for(x in screen){
             currentJam += x.jam.toDouble()
         }
@@ -182,16 +183,4 @@ class ScreenTime : Fragment() {
         }
     }
 
-    fun getDate(c: Calendar) : String {
-        val year = c.get(Calendar.YEAR).toString()
-        val month = c.get(Calendar.MONTH).toString()
-        val day_week = c.get(Calendar.DAY_OF_WEEK)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val hari = arrayOf("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu")
-
-        val date = "${hari[day_week-1]} - $day/${month.toInt() + 1}/$year"
-
-        return date
-    }
 }

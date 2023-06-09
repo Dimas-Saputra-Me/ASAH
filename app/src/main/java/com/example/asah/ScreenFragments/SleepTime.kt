@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.asah.R
+import com.example.asah.getDate
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -33,6 +35,10 @@ class SleepTime : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_sleep_time, container, false)
 
+        // Update Date
+        val t_date = view.findViewById<TextView>(R.id.tanggal_today)
+        t_date.text = getDate()
+
         // btn add sleep
         val btn_add = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_add_tidur)
         btn_add.setOnClickListener {
@@ -50,56 +56,58 @@ class SleepTime : Fragment() {
             // set time picker
             // sleep time picker
             val sleepTimePicker = dialogView.findViewById<AutoCompleteTextView>(R.id.textPickSleep)
-            sleepTimePicker.setOnClickListener {
-                // on below line we are getting the instance of our calendar.
-                val c = Calendar.getInstance()
+            sleepTimePicker.apply {
+                isFocusable = false // Disable keyboard input
+                setOnClickListener {
+                    // on below line we are getting the instance of our calendar.
+                    val c = Calendar.getInstance()
 
-                // on below line we are getting our hour, minute.
-                val hour = c.get(Calendar.HOUR_OF_DAY)
-                val minute = c.get(Calendar.MINUTE)
+                    // on below line we are getting our hour, minute.
+                    val hour = c.get(Calendar.HOUR_OF_DAY)
+                    val minute = c.get(Calendar.MINUTE)
 
-                // on below line we are initializing our Time Picker Dialog
-                val timePickerDialog = TimePickerDialog(activity,
-                    { view, hourOfDay, minute ->
-                        // on below line we are setting selected time in our text view.
-                        sleepTimePicker.setText("$hourOfDay:$minute")
-                        // TODO : nanti ngatur variable ini
-                        sleepHour = hourOfDay
-                        sleepMinute = minute
-                    },
-                    hour,
-                    minute,
-                    true
-                )
-                // at last we are calling show to display our time picker dialog.
-                timePickerDialog.show()
+                    val timePickerDialog = TimePickerDialog(context,
+                        { view, hourOfDay, minute ->
+                            sleepTimePicker.setText("$hourOfDay:$minute")
+                            // TODO : nanti ngatur variable ini
+                            sleepHour = hourOfDay
+                            sleepMinute = minute
+                        },
+                        hour,
+                        minute,
+                        true
+                    )
+                    // at last we are calling show to display our time picker dialog.
+                    timePickerDialog.show()
+                }
             }
 
             // wake time picker
             val wakeTimePicker = dialogView.findViewById<AutoCompleteTextView>(R.id.textPickWake)
-            sleepTimePicker.setOnClickListener {
-                // on below line we are getting the instance of our calendar.
-                val c = Calendar.getInstance()
+            wakeTimePicker.apply {
+                isFocusable = false // Disable keyboard input
+                setOnClickListener {
+                    // on below line we are getting the instance of our calendar.
+                    val c = Calendar.getInstance()
 
-                // on below line we are getting our hour, minute.
-                val hour = c.get(Calendar.HOUR_OF_DAY)
-                val minute = c.get(Calendar.MINUTE)
+                    // on below line we are getting our hour, minute.
+                    val hour = c.get(Calendar.HOUR_OF_DAY)
+                    val minute = c.get(Calendar.MINUTE)
 
-                // on below line we are initializing our Time Picker Dialog
-                val timePickerDialog = TimePickerDialog(activity,
-                    { view, hourOfDay, minute ->
-                        // on below line we are setting selected time in our text view.
-                        sleepTimePicker.setText("$hourOfDay:$minute")
-                        // TODO : nanti ngatur variable ini
-                        wakeHour = hourOfDay
-                        wakeMinute = minute
-                    },
-                    hour,
-                    minute,
-                    true
-                )
-                // at last we are calling show to display our time picker dialog.
-                timePickerDialog.show()
+                    val timePickerDialog = TimePickerDialog(context,
+                        { view, hourOfDay, minute ->
+                            wakeTimePicker.setText("$hourOfDay:$minute")
+                            // TODO : nanti ngatur variable ini
+                            wakeHour = hourOfDay
+                            wakeMinute = minute
+                        },
+                        hour,
+                        minute,
+                        true
+                    )
+                    // at last we are calling show to display our time picker dialog.
+                    timePickerDialog.show()
+                }
             }
 
             // on click add sleep time
@@ -141,4 +149,5 @@ class SleepTime : Fragment() {
         // Inflate the layout for this fragment
         return view
     }
+
 }

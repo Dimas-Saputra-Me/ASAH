@@ -54,7 +54,7 @@ class MainPage : AppCompatActivity() {
 
         // NOTIFICATION - Create an intent for the click action
         val intent = Intent(this, MainPage::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         // NOTIFICATION - Build the notification
         notificationBuilder = NotificationCompat.Builder(this, channelId)

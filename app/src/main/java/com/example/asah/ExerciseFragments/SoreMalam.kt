@@ -15,6 +15,7 @@ import androidx.room.Room
 import com.example.asah.Database.Olahraga
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
+import com.example.asah.getDate
 import com.google.android.material.textfield.TextInputLayout
 import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
@@ -175,16 +176,4 @@ class SoreMalam : Fragment() {
         return view
     }
 
-    fun getDate(c: Calendar = Calendar.getInstance()) : String {
-        val year = c.get(Calendar.YEAR).toString()
-        val month = c.get(Calendar.MONTH).toString()
-        val day_week = c.get(Calendar.DAY_OF_WEEK)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val hari = arrayOf("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu")
-
-        val date = "${hari[day_week-1]} - $day/${month.toInt() + 1}/$year"
-
-        return date
-    }
 }
