@@ -22,6 +22,7 @@ import com.example.asah.Database.Profile
 import com.example.asah.Database.asahDatabase
 import com.example.asah.databinding.ActivityMainPageBinding
 import kotlin.system.exitProcess
+import android.provider.Settings
 
 class MainPage : AppCompatActivity() {
 
@@ -109,7 +110,8 @@ class MainPage : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.nav_bottom_settings -> {
-                    // TODO
+                    val intent = Intent(Settings.ACTION_SETTINGS)
+                    startActivity(intent)
                 }
                 R.id.nav_bottom_profile -> {
                     val intent = Intent(this, ProfileMenu::class.java)

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -62,7 +63,9 @@ class MenuRutinitas : AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
-                    // None
+                    val intent = Intent(this, MainPage::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 }
                 R.id.nav_cek_data -> {
                     val intent = Intent(this, DatabaseTemp::class.java)
@@ -91,7 +94,8 @@ class MenuRutinitas : AppCompatActivity() {
                     // THIS PAGE
                 }
                 R.id.nav_bottom_settings -> {
-                    // TODO
+                    val intent = Intent(Settings.ACTION_SETTINGS)
+                    startActivity(intent)
                 }
                 R.id.nav_bottom_profile -> {
                     val intent = Intent(this, ProfileMenu::class.java)

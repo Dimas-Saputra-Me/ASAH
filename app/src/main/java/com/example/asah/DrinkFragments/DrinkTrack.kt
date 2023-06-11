@@ -119,8 +119,7 @@ class DrinkTrack : Fragment() {
         }
         currentIntensitas /= 1000.0
 
-        //TODO: UPDATE TARGET SESUAI PERHITUNGAN
-        var target = recomendedDrink
+        var target = recomendedDrink / 1000.0
 
         t_intensitas.text = "$currentIntensitas/$target"
 
