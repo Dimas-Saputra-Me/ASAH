@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import com.example.asah.Database.Minuman
 import com.example.asah.Database.Profile
+import com.example.asah.Database.Survey_db
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
 import com.example.asah.getDate
@@ -20,6 +21,7 @@ import kotlin.properties.Delegates
 
 class DrinkTrack : Fragment() {
     var selectedGlass: Int? = null
+    var recomendedDrink: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,10 @@ class DrinkTrack : Fragment() {
         // Update Date
         val t_date = view.findViewById<TextView>(R.id.tanggal_today)
         t_date.text = getDate()
+
+        // Set drink target
+        val surveys: List<Survey_db> = db.Survey_dbDAO().getSurvey()
+        recomendedDrink = 30 * (surveys[0].berat).toInt()
 
         // Inisialisasi Text & Progress
         updatePage(view, db)
@@ -114,7 +120,7 @@ class DrinkTrack : Fragment() {
         currentIntensitas /= 1000.0
 
         //TODO: UPDATE TARGET SESUAI PERHITUNGAN
-        var target = 5.0
+        var target = recomendedDrink
 
         t_intensitas.text = "$currentIntensitas/$target"
 

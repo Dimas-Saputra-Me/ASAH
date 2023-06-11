@@ -37,11 +37,11 @@ class Eat : AppCompatActivity() {
         // Dropdown Karbohidrat
         val karboItems = listOf(
             "none",
-            "Nasi Putih (? kcal)",
-            "Kentang (? kcal)",
-            "Cereal (? kcal)",
-            "Nasi Merah (? kcal)",
-            "Mie (? kcal)"
+            "Nasi Putih (150 kal)",
+            "Kentang (75 kcal)",
+            "Cereal (380 kcal)",
+            "Nasi Merah (110 kcal)",
+            "Mie (300 kcal)"
         )
         val karboAdapter = ArrayAdapter(this, R.layout.list_dropdown, karboItems)
         (binding.inputKarbohidrat as? AutoCompleteTextView)?.setAdapter(karboAdapter)
@@ -49,12 +49,13 @@ class Eat : AppCompatActivity() {
         // Dropdown Protein
         val proteinItem = listOf(
             "none",
-            "Ayam (? kcal)",
-            "Daging Sapi (? kcal)",
-            "Ikan (? kcal)",
-            "Tahu/Tempe (? kcal)",
-            "Telur (? kcal)",
-            "Susu (? kcal)"
+            "Ayam (165 kcal)",
+            "Daging Sapi (250 kcal)",
+            "Ikan (150 kcal)",
+            "Tahu (70 kcal)",
+            "Tempe(160 kcal)",
+            "Telur (75 kcal)",
+            "Susu (100 kcal)"
         )
         val proteinAdapter = ArrayAdapter(this, R.layout.list_dropdown, proteinItem)
         (binding.inputProtein as? AutoCompleteTextView)?.setAdapter(proteinAdapter)
@@ -62,8 +63,8 @@ class Eat : AppCompatActivity() {
         // Dropdown Serat
         val seratItem = listOf(
             "none",
-            "Sayur (? kcal)",
-            "Buah (? kcal)"
+            "Sayur (25 kcal)",
+            "Buah (50 kcal)"
         )
         val seratAdapter = ArrayAdapter(this, R.layout.list_dropdown, seratItem)
         (binding.inputSerat as? AutoCompleteTextView)?.setAdapter(seratAdapter)
@@ -72,7 +73,7 @@ class Eat : AppCompatActivity() {
         val karbohidratDropdown: AutoCompleteTextView = binding.inputKarbohidrat
         karbohidratDropdown.setOnItemClickListener { parent, view, position, id ->
             // TODO: change cal value
-            val positionToKarbohidrat: Array<Double> = arrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
+            val positionToKarbohidrat: Array<Double> = arrayOf(0.0, 150.0, 75.0, 380.0, 110.0, 300.0)
             this.selectedKarbohidrat = positionToKarbohidrat[position]
         }
 
@@ -80,7 +81,7 @@ class Eat : AppCompatActivity() {
         val ProteinDropdown: AutoCompleteTextView = binding.inputProtein
         ProteinDropdown.setOnItemClickListener { parent, view, position, id ->
             // TODO: change cal value
-            val positionToProtein: Array<Double> = arrayOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0)
+            val positionToProtein: Array<Double> = arrayOf(0.0, 165.0, 250.0, 150.0, 70.0, 160.0, 75.0, 100.0)
             this.selectedProtein = positionToProtein[position]
         }
 
@@ -88,7 +89,7 @@ class Eat : AppCompatActivity() {
         val SeratDropdown: AutoCompleteTextView = binding.inputSerat
         SeratDropdown.setOnItemClickListener { parent, view, position, id ->
             // TODO: change cal value
-            val positionToSerat: Array<Double> = arrayOf(1.0, 2.0, 3.0)
+            val positionToSerat: Array<Double> = arrayOf(0.0, 25.0, 50.0)
             this.selectedSerat = positionToSerat[position]
         }
 
