@@ -9,7 +9,8 @@ import androidx.room.RoomDatabase
     Makanan::class,
     Minuman::class,
     Olahraga::class,
-    Screen::class], version = 1)
+    Screen::class,
+    Sleep::class], version = 1)
 abstract class asahDatabase: RoomDatabase() {
     abstract fun ProfileDAO(): ProfileDAO
     abstract fun Survey_dbDAO(): Survey_dbDAO
@@ -17,4 +18,5 @@ abstract class asahDatabase: RoomDatabase() {
     abstract fun MinumanDAO(): MinumanDAO
     abstract fun OlahragaDAO(): OlahragaDAO
     abstract fun ScreenDAO(): ScreenDAO
+    abstract fun SleepDAO(): SleepDAO
 }

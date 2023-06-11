@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
+import com.example.asah.Database.Minuman
 import com.example.asah.Database.Screen
 import com.example.asah.Database.asahDatabase
 import com.example.asah.R
@@ -39,6 +40,9 @@ class ScreenTime : Fragment() {
 
         // Inisialisasi Cirular Progress
         updateCircularProgress(view, db)
+
+        // Update text rata rata
+        updateRataRata(view, db)
 
         // btn add sleep
         val btn_add = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_add_pemakaian)
@@ -181,6 +185,30 @@ class ScreenTime : Fragment() {
             setProgressWithAnimation(((currentJam*100)/target).toFloat(), 1000)
             startAngle = 180f
         }
+    }
+
+    fun updateRataRata(view: View, db: asahDatabase){
+        var totalScreen: Int = 0;
+
+        val t_ratarata = view.findViewById<TextView>(R.id.screen_textRataRata)
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, -7);
+
+        for(i in 1..7){
+            calendar.add(Calendar.DATE, 1);
+            val screen: List<Screen> = db.ScreenDAO().getScreenbyDate(date = getDate(calendar))
+
+            for(x in screen){
+               totalScreen += x.jam
+            }
+
+        }
+
+        val ratarata = String.format("%.2f", totalScreen.toDouble() / 7.0)
+
+        t_ratarata.setText("$ratarata jam 0 menit")
+
     }
 
 }

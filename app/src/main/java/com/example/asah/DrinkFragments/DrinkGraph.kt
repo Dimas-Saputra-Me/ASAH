@@ -66,7 +66,6 @@ class DrinkGraph : Fragment() {
                 DataPoint(days[4], intensitas[4]),
                 DataPoint(days[5], intensitas[5]),
                 DataPoint(days[6], intensitas[6]),
-
             )
         )
 
@@ -112,5 +111,4 @@ class DrinkGraph : Fragment() {
         // Inflate the layout for this fragment
         return view
     }
-
 }

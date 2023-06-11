@@ -25,6 +25,7 @@ class DatabaseTemp : AppCompatActivity() {
         val makanan: List<Makanan> = db.MakananDAO().getMakanan()
         val olahraga: List<Olahraga> = db.OlahragaDAO().getOlahraga()
         val screen: List<Screen> = db.ScreenDAO().getScreen()
+        val sleep: List<Sleep> = db.SleepDAO().getSleep()
 
         var dbText = " "
 
@@ -45,6 +46,10 @@ class DatabaseTemp : AppCompatActivity() {
 
         for(s in screen){
             dbText += "${s.id} | ${s.jam} | ${s.date} |\n"
+        }
+
+        for(s in sleep){
+            dbText += "${s.id} | ${s.menit} | ${s.date} |\n"
         }
 
         binding.dataTmp.text = dbText

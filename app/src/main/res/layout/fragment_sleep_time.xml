@@ -115,7 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/graph" />
 
             <TextView
-                android:id="@+id/textRataRata"
+                android:id="@+id/sleep_textRataRata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="(n) jam (m) menit"
