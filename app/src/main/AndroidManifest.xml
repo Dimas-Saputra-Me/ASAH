@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ASAH"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileMenu"
+            android:exported="false" />
+        <activity
             android:name=".Screen"
             android:exported="false" />
         <activity

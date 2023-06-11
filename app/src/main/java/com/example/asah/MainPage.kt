@@ -112,7 +112,8 @@ class MainPage : AppCompatActivity() {
                     // TODO
                 }
                 R.id.nav_bottom_profile -> {
-                    // TODO
+                    val intent = Intent(this, ProfileMenu::class.java)
+                    startActivity(intent)
                 }
             }
 
