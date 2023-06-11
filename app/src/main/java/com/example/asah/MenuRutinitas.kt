@@ -1,11 +1,18 @@
 package com.example.asah
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.asah.databinding.ActivityMenuRutinitasBinding
 import kotlin.system.exitProcess
@@ -15,6 +22,8 @@ class MenuRutinitas : AppCompatActivity() {
     lateinit var binding: ActivityMenuRutinitasBinding
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    lateinit var notificationManager: NotificationManager
+    lateinit var notificationBuilder: NotificationCompat.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +102,31 @@ class MenuRutinitas : AppCompatActivity() {
             true
         }
 
+        // NOTIFICATION
+        val channelId = "asah"
+        val channelName = "Asah Notification"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, channelName, importance)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // NOTIFICATION - Create an intent for the click action
+        val intent = Intent(this, MainPage::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        // NOTIFICATION - Build the notification
+        notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.icon_asah)
+            .setContentTitle("Judul")
+            .setContentText("Isi")
+            .setColor(Color.BLUE)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -108,10 +142,14 @@ class MenuRutinitas : AppCompatActivity() {
         }
 
         when (item.itemId) {
-//            R.id.ID -> {
-//
-//            }
+            R.id.notification -> {
+                // Display the notification
+                val notificationId = 1
+                notificationManager.notify(notificationId, notificationBuilder.build())
+            }
+
         }
+
         return super.onOptionsItemSelected(item)
     }
 }

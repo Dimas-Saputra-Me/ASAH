@@ -168,7 +168,7 @@ class PagiSiang : Fragment() {
             }
         }
 
-        // TODO: Streak harian
+        // TODO: Streak Harian
         // TODO: Rata-Rata Kalori
 
         // Inflate the layout for this fragment
