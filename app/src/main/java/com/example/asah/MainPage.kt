@@ -95,7 +95,7 @@ class MainPage : AppCompatActivity() {
         // Set Profile Name
         binding.nama.text = SpannableStringBuilder()
             .append("Halo ")
-            .append(profile[0].nama, ForegroundColorSpan(Color.GREEN), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            .append(profile[0].nama, ForegroundColorSpan(Color.rgb(38,190,0)), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             .append("!", ForegroundColorSpan(Color.BLACK), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         // Bottom Bar Listener
